@@ -28,7 +28,7 @@ class Instagram
     const MAX_COMMENTS_PER_REQUEST = 300;
     const MAX_LIKES_PER_REQUEST = 300;
     const PAGING_TIME_LIMIT_SEC = 1800; // 30 mins time limit on operations that require multiple requests
-    const PAGING_DELAY_MINIMUM_MICROSEC = 1000000; // 1 sec min delay to simulate browser
+    const PAGING_DELAY_MINIMUM_MICROSEC = 1500000; // 1 sec min delay to simulate browser
     const PAGING_DELAY_MAXIMUM_MICROSEC = 3000000; // 3 sec max delay to simulate browser
 
     /** @var ExtendedCacheItemPoolInterface $instanceCache */
@@ -826,11 +826,12 @@ class Instagram
      * @param int $count
      * @param string $maxId
      * @param string $minTimestamp
+     * @param callable $callable for each media
      *
      * @return Media[]
      * @throws InstagramException
      */
-    public function getMediasByTag($tag, $count = 12, $maxId = '', $minTimestamp = null)
+    public function getMediasByTag($tag, $count = 12, $maxId = '', $minTimestamp = null, $callable = null)
     {
         $index = 0;
         $medias = [];
@@ -860,12 +861,18 @@ class Instagram
                     return $medias;
                 }
                 $media = Media::create($mediaArray['node']);
+
                 if (in_array($media->getId(), $mediaIds)) {
                     return $medias;
                 }
                 if (isset($minTimestamp) && $media->getCreatedTime() < $minTimestamp) {
                     return $medias;
                 }
+
+                if (is_callable($callable)) {
+                    call_user_func($callable, $media);
+                }
+                
                 $mediaIds[] = $media->getId();
                 $medias[] = $media;
                 $index++;
