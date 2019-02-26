@@ -28,8 +28,8 @@ class Instagram
     const MAX_COMMENTS_PER_REQUEST = 300;
     const MAX_LIKES_PER_REQUEST = 300;
     const PAGING_TIME_LIMIT_SEC = 1800; // 30 mins time limit on operations that require multiple requests
-    const PAGING_DELAY_MINIMUM_MICROSEC = 1500000; // 1 sec min delay to simulate browser
-    const PAGING_DELAY_MAXIMUM_MICROSEC = 3000000; // 3 sec max delay to simulate browser
+    const PAGING_DELAY_MINIMUM_MICROSEC = 2000000; // 2 sec min delay to simulate browser
+    const PAGING_DELAY_MAXIMUM_MICROSEC = 3500000; // 3.5 sec max delay to simulate browser
 
     /** @var ExtendedCacheItemPoolInterface $instanceCache */
     private static $instanceCache;
@@ -872,7 +872,7 @@ class Instagram
                 if (is_callable($callable)) {
                     call_user_func($callable, $media);
                 }
-                
+
                 $mediaIds[] = $media->getId();
                 $medias[] = $media;
                 $index++;
