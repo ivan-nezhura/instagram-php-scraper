@@ -28,8 +28,8 @@ class Instagram
     const MAX_COMMENTS_PER_REQUEST = 300;
     const MAX_LIKES_PER_REQUEST = 300;
     const PAGING_TIME_LIMIT_SEC = 1800; // 30 mins time limit on operations that require multiple requests
-    const PAGING_DELAY_MINIMUM_MICROSEC = 2000000; // 2 sec min delay to simulate browser
-    const PAGING_DELAY_MAXIMUM_MICROSEC = 3500000; // 3.5 sec max delay to simulate browser
+    const PAGING_DELAY_MINIMUM_MICROSEC = 3000000; // 2 sec min delay to simulate browser
+    const PAGING_DELAY_MAXIMUM_MICROSEC = 4000000; // 3.5 sec max delay to simulate browser
 
     /** @var ExtendedCacheItemPoolInterface $instanceCache */
     private static $instanceCache;
